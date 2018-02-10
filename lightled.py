@@ -5,20 +5,29 @@ import time
 
 import RPi.GPIO as GPIO
 
-PIN = 25
+PIN_GREEN = 22
+PIN_RED = 25
 
 GPIO.setmode(GPIO.BCM)
 
-# Set pin 25 at OUTPUT
-GPIO.setup(PIN, GPIO.OUT) 
+# Set pins for as OUTPUT
+GPIO.setup(PIN_GREEN, GPIO.OUT)
+GPIO.setup(PIN_RED, GPIO.OUT)
 
 for x in range(0, 10):
-    print("turning LED on")
-    GPIO.output(PIN, GPIO.HIGH) 
+    if x % 2 == 0:
+        pin = PIN_GREEN
+        led = "green"
+    else:
+        pin = PIN_RED
+        led = "red"
+
+    print("turning %s LED on" % led)
+    GPIO.output(pin, GPIO.HIGH)
     time.sleep(2)
 
-    print("turning LED off")
-    GPIO.output(PIN, GPIO.LOW)
-    time.sleep(2) 
+    print("turning %s LED off" % led)
+    GPIO.output(pin, GPIO.LOW)
+    time.sleep(2)
 
 GPIO.cleanup()
